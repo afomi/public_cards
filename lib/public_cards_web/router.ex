@@ -18,12 +18,26 @@ defmodule PublicCardsWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+    # Card routes
+    live "/cards", CardLive.Index, :index
+    live "/cards/new", CardLive.Form, :new
+    live "/cards/:id", CardLive.Show, :show
+    live "/cards/:id/edit", CardLive.Form, :edit
+
+    # Pretty namespaced routes (future)
+    # live "/c/:namespace/:slug", CardLive.Show, :show_by_slug
+
+    # Embed script (served from assets)
+    get "/embed.js", EmbedController, :script
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", PublicCardsWeb do
-  #   pipe_through :api
-  # end
+  # API routes for JSON access
+  scope "/api", PublicCardsWeb.Api do
+    pipe_through :api
+
+    get "/cards/:id", CardController, :show
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:public_cards, :dev_routes) do

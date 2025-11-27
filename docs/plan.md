@@ -16,13 +16,34 @@ Rekindle the creative "write" culture of early web (geocities era) - when people
 
 ## Current Focus
 
+Iteration 1 MVP complete. Ready for Fly.io deployment and Jurisdictional.org integration testing.
+
 ## Next Steps
 
 1. [x] Define product vision
 2. [x] Draft initial personas (Creator, Viewer, Claimant)
 3. [x] Write first use cases (UC-01: Create, UC-02: View)
-4. [ ] Create Phoenix app
-5. [ ] Implement first feature (card viewing - simplest path)
+4. [x] Create Phoenix app
+5. [x] Implement first feature (card CRUD + API + embed)
+
+## Iteration 1 Complete
+
+**Delivered:**
+- Card CRUD via LiveView (`/cards`)
+- UUID primary keys, namespace/slug addressing
+- Freeform JSON content with front/back structure
+- Content hash (SHA256) computed on save
+- Version auto-increment on content change
+- JSON-LD API at `/api/cards/:id`
+- Embed web component at `/embed.js`
+- 23 passing tests
+
+**Next iteration ideas:**
+- [ ] Pretty URLs: `/c/:namespace/:slug`
+- [ ] Authentication (owner can edit)
+- [ ] Card visual design (flip animation, mobile-first)
+- [ ] Jurisdictional.org integration test
+- [ ] Fly.io deployment
 
 ## Key Architectural Considerations
 
