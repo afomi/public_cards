@@ -17,6 +17,44 @@ defmodule PublicCardsWeb.Api.CardController do
     end
   end
 
+  @doc """
+  Returns the event history for a card.
+
+  GET /api/cards/:id/events
+  """
+  def events(conn, %{"id" => id}) do
+    case Cards.get_card(id) do
+      nil ->
+        conn
+        |> put_status(:not_found)
+        |> json(%{error: "Card not found"})
+
+      card ->
+        events = Cards.get_events(card)
+
+        conn
+        |> put_resp_content_type("application/json")
+        |> json(%{
+          card_id: card.id,
+          head_event_id: card.head_event_id,
+          events: Enum.map(events, &event_to_json/1)
+        })
+    end
+  end
+
+  defp event_to_json(event) do
+    %{
+      id: event.id,
+      hash: event.hash,
+      prev_event_id: event.prev_event_id,
+      op: event.op,
+      field: event.field,
+      value: event.value,
+      author: event.author,
+      timestamp: event.inserted_at
+    }
+  end
+
   defp card_to_json_ld(card) do
     %{
       "@context" => "https://schema.org",

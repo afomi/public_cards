@@ -12,8 +12,8 @@ defmodule PublicCards.Application do
       PublicCards.Repo,
       {DNSCluster, query: Application.get_env(:public_cards, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: PublicCards.PubSub},
-      # Start a worker by calling: PublicCards.Worker.start_link(arg)
-      # {PublicCards.Worker, arg},
+      # Schema.org vocabulary loader
+      PublicCards.Schema,
       # Start to serve requests, typically the last entry
       PublicCardsWeb.Endpoint
     ]

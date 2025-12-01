@@ -1,0 +1,142 @@
+<Layouts.app flash={@flash}>
+  <.header>
+    {@card.title || "#{@card.namespace}/#{@card.slug}"}
+    <:subtitle>
+      <%= if @card.schema_type do %>
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-slate-100 text-slate-700">
+          {@card.schema_type}
+        </span>
+      <% end %>
+      v{@card.version}
+    </:subtitle>
+    <:actions>
+      <.button navigate={~p"/cards"}>
+        <.icon name="hero-arrow-left" />
+      </.button>
+      <.button
+        variant="primary"
+        navigate={~p"/cards/#{@card}/edit?return_to=show"}
+      >
+        <.icon name="hero-pencil-square" /> Edit
+      </.button>
+    </:actions>
+  </.header>
+
+  <!-- Card Preview -->
+  <div class="mt-8">
+    <h3 class="text-sm font-medium text-slate-500 mb-3">Preview</h3>
+    <div class="max-w-sm">
+      <.card_preview card={@card} display_fields={@display_fields} />
+    </div>
+  </div>
+
+  <.list>
+    <:item title="Namespace">{@card.namespace}</:item>
+    <:item title="Slug">{@card.slug}</:item>
+    <:item title="Title">{@card.title}</:item>
+    <:item title="Schema Type">{@card.schema_type || @card.card_type}</:item>
+    <:item title="Version">v{@card.version}</:item>
+    <:item title="Terms">{@card.terms}</:item>
+    <:item title="Owner">{@card.owner_email}</:item>
+    <:item title="Status">{@card.status}</:item>
+    <:item title="Content Hash">
+      <code class="text-xs font-mono text-slate-500">{@card.content_hash}</code>
+    </:item>
+  </.list>
+
+  <div class="mt-8">
+    <h3 class="text-sm font-medium text-slate-500 mb-3">Content</h3>
+    <pre class="bg-slate-50 border border-slate-200 p-4 rounded overflow-auto text-sm text-slate-700"><code>{Jason.encode!(@card.content, pretty: true)}</code></pre>
+  </div>
+
+  <!-- Event History -->
+  <div class="mt-8">
+    <h3 class="text-sm font-medium text-slate-500 mb-3">
+      Event History
+      <span class="text-slate-400 font-normal">({length(@events)} events)</span>
+    </h3>
+
+    <%= if @events == [] do %>
+      <p class="text-sm text-slate-400 italic">No events recorded yet.</p>
+    <% else %>
+      <div class="border border-slate-200 rounded overflow-hidden">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-slate-50 border-b border-slate-200">
+              <th class="text-left py-2 px-3 font-medium text-slate-500 text-xs uppercase">
+                Op
+              </th>
+              <th class="text-left py-2 px-3 font-medium text-slate-500 text-xs uppercase">
+                Field
+              </th>
+              <th class="text-left py-2 px-3 font-medium text-slate-500 text-xs uppercase">
+                Value
+              </th>
+              <th class="text-left py-2 px-3 font-medium text-slate-500 text-xs uppercase">
+                Author
+              </th>
+              <th class="text-left py-2 px-3 font-medium text-slate-500 text-xs uppercase">
+                Hash
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <%= for event <- @events do %>
+              <tr class="border-b border-slate-100 last:border-0">
+                <td class="py-2 px-3">
+                  <span class={[
+                    "inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium",
+                    event.op == "create" && "bg-green-100 text-green-700",
+                    event.op == "set" && "bg-blue-100 text-blue-700",
+                    event.op == "unset" && "bg-red-100 text-red-700"
+                  ]}>
+                    {event.op}
+                  </span>
+                </td>
+                <td class="py-2 px-3 font-mono text-xs text-slate-600">
+                  {event.field}
+                </td>
+                <td class="py-2 px-3 text-slate-600 max-w-xs truncate">
+                  <%= if event.value do %>
+                    <code class="text-xs">{inspect(event.value, limit: 50)}</code>
+                  <% else %>
+                    <span class="text-slate-400">-</span>
+                  <% end %>
+                </td>
+                <td class="py-2 px-3 text-slate-500 text-xs">
+                  {event.author || "-"}
+                </td>
+                <td class="py-2 px-3">
+                  <code class="text-xs text-slate-400 font-mono">
+                    {String.slice(event.hash || "", 0..7)}...
+                  </code>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- API Links -->
+  <div class="mt-8 pt-6 border-t border-slate-200">
+    <h3 class="text-sm font-medium text-slate-500 mb-3">API</h3>
+    <div class="flex gap-4 text-sm">
+      <a
+        href={~p"/api/cards/#{@card}"}
+        class="text-slate-600 hover:text-slate-900 underline"
+        target="_blank"
+      >
+        JSON-LD
+      </a>
+      <a
+        href={~p"/api/cards/#{@card}/events"}
+        class="text-slate-600 hover:text-slate-900 underline"
+        target="_blank"
+      >
+        Events
+      </a>
+    </div>
+  </div>
+</Layouts.app>

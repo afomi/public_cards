@@ -25,6 +25,10 @@ defmodule PublicCardsWeb.Router do
     live "/cards/:id", CardLive.Show, :show
     live "/cards/:id/edit", CardLive.Form, :edit
 
+    # Schema browser
+    live "/schema", SchemaLive.Index, :index
+    live "/schema/:id", SchemaLive.Show, :show
+
     # Pretty namespaced routes (future)
     # live "/c/:namespace/:slug", CardLive.Show, :show_by_slug
 
@@ -36,7 +40,16 @@ defmodule PublicCardsWeb.Router do
   scope "/api", PublicCardsWeb.Api do
     pipe_through :api
 
+    # Card endpoints
     get "/cards/:id", CardController, :show
+    get "/cards/:id/events", CardController, :events
+
+    # Sync endpoint for distributed protocol
+    get "/events", EventsController, :index
+
+    # Schema.org type browser
+    get "/schema/types", SchemaController, :types
+    get "/schema/types/:id", SchemaController, :show_type
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
