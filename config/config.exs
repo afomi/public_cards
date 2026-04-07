@@ -11,9 +11,11 @@ config :public_cards,
   ecto_repos: [PublicCards.Repo],
   generators: [timestamp_type: :utc_datetime]
 
+host = System.get_env("PHX_HOST")
+
 # Configures the endpoint
 config :public_cards, PublicCardsWeb.Endpoint,
-  url: [host: "localhost"],
+  url: [host: host],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
     formats: [html: PublicCardsWeb.ErrorHTML, json: PublicCardsWeb.ErrorJSON],

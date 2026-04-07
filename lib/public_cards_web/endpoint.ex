@@ -14,7 +14,8 @@ defmodule PublicCardsWeb.Endpoint do
   socket "/live", Phoenix.LiveView.Socket,
     websocket: [
       connect_info: [session: @session_options],
-      timeout: 45_000
+      timeout: 45_000,
+      check_origin: ["https://public.cards"]
     ],
     longpoll: [connect_info: [session: @session_options]]
 
