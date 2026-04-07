@@ -227,17 +227,18 @@ defmodule PublicCards.Schema do
   # Private functions
 
   defp load_schema_file do
-    path = Application.app_dir(:public_cards, @schema_file)
-
-    # Fallback to relative path in dev
     path =
-      if File.exists?(path) do
-        path
-      else
-        Path.join(File.cwd!(), @schema_file)
-      end
+      [
+        Application.app_dir(:public_cards, @schema_file),
+        Path.join(File.cwd!(), @schema_file),
+        Path.join(File.cwd!(), "test/support/fixtures/schemaorg-current-https.jsonld")
+      ]
+      |> Enum.find(&File.exists?/1)
 
-    case File.read(path) do
+    case path && File.read(path) do
+      nil ->
+        {:error, :enoent}
+
       {:ok, content} ->
         case Jason.decode(content) do
           {:ok, data} -> parse_schema(data)
