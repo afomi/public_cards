@@ -46,7 +46,12 @@ defmodule PublicCardsWeb.Api.EventsController do
   end
 
   defp parse_limit(nil), do: 100
-  defp parse_limit(limit) when is_binary(limit), do: String.to_integer(limit) |> min(1000)
+  defp parse_limit(limit) when is_binary(limit) do
+    case Integer.parse(limit) do
+      {num, ""} -> num |> max(1) |> min(1000)
+      _ -> 100
+    end
+  end
   defp parse_limit(limit) when is_integer(limit), do: min(limit, 1000)
 
   defp get_hash(nil), do: nil

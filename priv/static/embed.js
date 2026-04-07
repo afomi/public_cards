@@ -60,9 +60,10 @@ class PublicCard extends HTMLElement {
     this.shadowRoot.innerHTML = `
       <style>${this.getStyles()}</style>
       <div class="card error">
-        <p>${message}</p>
+        <p></p>
       </div>
     `;
+    this.shadowRoot.querySelector('.error p').textContent = message;
   }
 
   render(card) {
@@ -107,7 +108,7 @@ class PublicCard extends HTMLElement {
         const displayValue = typeof value === 'object'
           ? JSON.stringify(value)
           : this.escapeHtml(String(value));
-        return `<div class="field"><span class="label">${label}</span><span class="value">${displayValue}</span></div>`;
+        return `<div class="field"><span class="label">${this.escapeHtml(label)}</span><span class="value">${displayValue}</span></div>`;
       })
       .join('');
   }

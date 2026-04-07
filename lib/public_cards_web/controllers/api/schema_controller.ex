@@ -64,7 +64,7 @@ defmodule PublicCardsWeb.Api.SchemaController do
   """
   def show_type(conn, %{"id" => type_id}) do
     # Handle URL-encoded colons
-    type_id = String.replace(type_id, "%3A", ":")
+    type_id = URI.decode(type_id)
 
     # Ensure it has the schema: prefix
     type_id =

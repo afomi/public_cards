@@ -35,3 +35,18 @@ public_cards-*.tar
 npm-debug.log
 /assets/node_modules/
 
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Environment and secrets
+.env
+.env.*
+*.key
+*.pem
+!priv/ssl/aws-rds-ca.pem
+
