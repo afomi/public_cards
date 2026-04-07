@@ -41,8 +41,7 @@ defmodule PublicCardsWeb.SchemaLive.Index do
                 value="true"
                 checked={@highlighted_only}
                 class="rounded border-slate-300 text-slate-600 focus:ring-slate-500"
-              />
-              Featured only
+              /> Featured only
             </label>
           </div>
         </form>

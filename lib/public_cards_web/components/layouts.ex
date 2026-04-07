@@ -110,5 +110,4 @@ defmodule PublicCardsWeb.Layouts do
     </div>
     """
   end
-
 end

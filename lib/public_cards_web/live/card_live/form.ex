@@ -25,8 +25,7 @@ defmodule PublicCardsWeb.CardLive.Form do
             phx-click="fill_sample_data"
             class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-slate-600 bg-slate-100 rounded hover:bg-slate-200 transition"
           >
-            <.icon name="hero-beaker" class="w-4 h-4" />
-            Fill Sample Data
+            <.icon name="hero-beaker" class="w-4 h-4" /> Fill Sample Data
           </button>
         </:actions>
       </.header>
@@ -176,8 +175,7 @@ defmodule PublicCardsWeb.CardLive.Form do
       <p class="mt-1 text-xs text-slate-400 font-mono">
         {@property.id}
         <%= if @property.range && @property.range != [] do %>
-          <span class="text-slate-300">|</span>
-          expects: {Enum.join(@property.range, ", ")}
+          <span class="text-slate-300">|</span> expects: {Enum.join(@property.range, ", ")}
         <% end %>
       </p>
     </div>

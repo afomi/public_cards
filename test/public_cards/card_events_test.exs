@@ -92,10 +92,14 @@ defmodule PublicCards.CardEventsTest do
         )
 
       {:ok, card} =
-        Cards.apply_event(card, %{op: "set", field: "schema:name", value: %{"@value" => "A"}}, author: "a")
+        Cards.apply_event(card, %{op: "set", field: "schema:name", value: %{"@value" => "A"}},
+          author: "a"
+        )
 
       {:ok, card} =
-        Cards.apply_event(card, %{op: "set", field: "schema:email", value: %{"@value" => "B"}}, author: "b")
+        Cards.apply_event(card, %{op: "set", field: "schema:email", value: %{"@value" => "B"}},
+          author: "b"
+        )
 
       events = Cards.get_events(card)
       assert length(events) == 3
@@ -122,10 +126,18 @@ defmodule PublicCards.CardEventsTest do
         )
 
       {:ok, card} =
-        Cards.apply_event(card, %{op: "set", field: "schema:name", value: %{"@value" => "Name"}}, [])
+        Cards.apply_event(
+          card,
+          %{op: "set", field: "schema:name", value: %{"@value" => "Name"}},
+          []
+        )
 
       {:ok, card} =
-        Cards.apply_event(card, %{op: "set", field: "schema:email", value: %{"@value" => "email@test.com"}}, [])
+        Cards.apply_event(
+          card,
+          %{op: "set", field: "schema:email", value: %{"@value" => "email@test.com"}},
+          []
+        )
 
       {:ok, _card} =
         Cards.apply_event(card, %{op: "unset", field: "schema:email"}, [])
@@ -151,7 +163,11 @@ defmodule PublicCards.CardEventsTest do
         )
 
       {:ok, _card1} =
-        Cards.apply_event(card1, %{op: "set", field: "schema:name", value: %{"@value" => "Test"}}, [])
+        Cards.apply_event(
+          card1,
+          %{op: "set", field: "schema:name", value: %{"@value" => "Test"}},
+          []
+        )
 
       # Get all events
       all_events = Cards.get_events_for_sync()

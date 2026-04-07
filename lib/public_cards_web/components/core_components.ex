@@ -64,8 +64,16 @@ defmodule PublicCardsWeb.CoreComponents do
         @kind == :info && "bg-slate-50 border-slate-200 text-slate-700",
         @kind == :error && "bg-red-50 border-red-200 text-red-700"
       ]}>
-        <.icon :if={@kind == :info} name="hero-information-circle" class="size-5 shrink-0 text-slate-500" />
-        <.icon :if={@kind == :error} name="hero-exclamation-circle" class="size-5 shrink-0 text-red-500" />
+        <.icon
+          :if={@kind == :info}
+          name="hero-information-circle"
+          class="size-5 shrink-0 text-slate-500"
+        />
+        <.icon
+          :if={@kind == :error}
+          name="hero-exclamation-circle"
+          class="size-5 shrink-0 text-red-500"
+        />
         <div class="flex-1">
           <p :if={@title} class="font-semibold">{@title}</p>
           <p class="text-sm">{msg}</p>
@@ -98,6 +106,7 @@ defmodule PublicCardsWeb.CoreComponents do
 
   def button(%{rest: rest} = assigns) do
     base = "inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded transition"
+
     variants = %{
       "primary" => "#{base} bg-slate-900 text-white hover:bg-slate-700",
       nil => "#{base} border border-slate-300 text-slate-700 hover:bg-slate-50"
@@ -220,7 +229,8 @@ defmodule PublicCardsWeb.CoreComponents do
           id={@id}
           name={@name}
           class={[
-            @class || "w-full px-3 py-2 border rounded text-sm bg-white focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500",
+            @class ||
+              "w-full px-3 py-2 border rounded text-sm bg-white focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500",
             @errors == [] && "border-slate-300",
             @errors != [] && (@error_class || "border-red-500")
           ]}
@@ -245,7 +255,8 @@ defmodule PublicCardsWeb.CoreComponents do
           id={@id}
           name={@name}
           class={[
-            @class || "w-full px-3 py-2 border rounded text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500",
+            @class ||
+              "w-full px-3 py-2 border rounded text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500",
             @errors == [] && "border-slate-300",
             @errors != [] && (@error_class || "border-red-500")
           ]}
@@ -269,7 +280,8 @@ defmodule PublicCardsWeb.CoreComponents do
           id={@id}
           value={Phoenix.HTML.Form.normalize_value(@type, @value)}
           class={[
-            @class || "w-full px-3 py-2 border rounded text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500",
+            @class ||
+              "w-full px-3 py-2 border rounded text-sm focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-slate-500",
             @errors == [] && "border-slate-300",
             @errors != [] && (@error_class || "border-red-500")
           ]}
@@ -300,7 +312,10 @@ defmodule PublicCardsWeb.CoreComponents do
 
   def header(assigns) do
     ~H"""
-    <header class={[@actions != [] && "flex items-center justify-between gap-6", "pb-6 border-b border-slate-200 mb-6"]}>
+    <header class={[
+      @actions != [] && "flex items-center justify-between gap-6",
+      "pb-6 border-b border-slate-200 mb-6"
+    ]}>
       <div>
         <h1 class="text-2xl font-semibold text-slate-900">
           {render_slot(@inner_block)}

@@ -60,8 +60,8 @@ defmodule PublicCardsWeb.CardLive.Show do
           {format_type(@card.schema_type)}
         </span>
       </div>
-
-      <!-- Primary field (name, title, etc) -->
+      
+    <!-- Primary field (name, title, etc) -->
       <div
         :if={@display_fields.primary}
         class="text-center"
@@ -70,8 +70,8 @@ defmodule PublicCardsWeb.CardLive.Show do
           {@display_fields.primary}
         </div>
       </div>
-
-      <!-- Secondary field (job title, description, etc) -->
+      
+    <!-- Secondary field (job title, description, etc) -->
       <div
         :if={@display_fields.secondary}
         class="text-center"
@@ -80,8 +80,8 @@ defmodule PublicCardsWeb.CardLive.Show do
           {@display_fields.secondary}
         </div>
       </div>
-
-      <!-- Additional fields -->
+      
+    <!-- Additional fields -->
       <div
         :if={@display_fields.details != []}
         class="pt-3 border-t border-slate-100 space-y-1"
@@ -130,8 +130,8 @@ defmodule PublicCardsWeb.CardLive.Show do
   defp extract_display_fields(content, schema_type) do
     primary =
       content["schema:name"] ||
-        content["schema:givenName"] &&
-          "#{content["schema:givenName"]} #{content["schema:familyName"]}" ||
+        (content["schema:givenName"] &&
+           "#{content["schema:givenName"]} #{content["schema:familyName"]}") ||
         content["schema:legalName"] ||
         content["schema:streetAddress"]
 

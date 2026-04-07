@@ -147,7 +147,10 @@ defmodule PublicCards.Schema do
   def handle_info(:load_schema, state) do
     case load_schema_file() do
       {:ok, {types, properties}} ->
-        Logger.info("Schema.org loaded: #{map_size(types)} types, #{map_size(properties)} properties")
+        Logger.info(
+          "Schema.org loaded: #{map_size(types)} types, #{map_size(properties)} properties"
+        )
+
         {:noreply, %{state | types: types, properties: properties, loaded: true}}
 
       {:error, reason} ->
@@ -304,7 +307,10 @@ defmodule PublicCards.Schema do
 
   defp extract_ids(nil), do: []
   defp extract_ids(%{"@id" => id}), do: [id]
-  defp extract_ids(list) when is_list(list), do: Enum.map(list, &extract_id/1) |> Enum.reject(&is_nil/1)
+
+  defp extract_ids(list) when is_list(list),
+    do: Enum.map(list, &extract_id/1) |> Enum.reject(&is_nil/1)
+
   defp extract_ids(_), do: []
 
   # Extract string value from rdfs:label which can be a string or a map with @value/@language

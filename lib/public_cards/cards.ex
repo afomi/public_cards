@@ -153,8 +153,11 @@ defmodule PublicCards.Cards do
 
   defp maybe_compute_content_hash(changeset) do
     case Ecto.Changeset.get_change(changeset, :content) do
-      nil -> changeset
-      content -> Ecto.Changeset.put_change(changeset, :content_hash, compute_content_hash(content))
+      nil ->
+        changeset
+
+      content ->
+        Ecto.Changeset.put_change(changeset, :content_hash, compute_content_hash(content))
     end
   end
 

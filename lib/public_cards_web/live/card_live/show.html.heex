@@ -21,8 +21,8 @@
       </.button>
     </:actions>
   </.header>
-
-  <!-- Card Preview -->
+  
+<!-- Card Preview -->
   <div class="mt-8">
     <h3 class="text-sm font-medium text-slate-500 mb-3">Preview</h3>
     <div class="max-w-sm">
@@ -48,12 +48,11 @@
     <h3 class="text-sm font-medium text-slate-500 mb-3">Content</h3>
     <pre class="bg-slate-50 border border-slate-200 p-4 rounded overflow-auto text-sm text-slate-700"><code>{Jason.encode!(@card.content, pretty: true)}</code></pre>
   </div>
-
-  <!-- Event History -->
+  
+<!-- Event History -->
   <div class="mt-8">
     <h3 class="text-sm font-medium text-slate-500 mb-3">
-      Event History
-      <span class="text-slate-400 font-normal">({length(@events)} events)</span>
+      Event History <span class="text-slate-400 font-normal">({length(@events)} events)</span>
     </h3>
 
     <%= if @events == [] do %>
@@ -118,8 +117,8 @@
       </div>
     <% end %>
   </div>
-
-  <!-- API Links -->
+  
+<!-- API Links -->
   <div class="mt-8 pt-6 border-t border-slate-200">
     <h3 class="text-sm font-medium text-slate-500 mb-3">API</h3>
     <div class="flex gap-4 text-sm">

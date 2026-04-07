@@ -62,8 +62,12 @@ defmodule PublicCards.Cards.Card do
     ])
     |> validate_required([:namespace, :slug])
     |> unique_constraint([:namespace, :slug])
-    |> validate_format(:slug, ~r/^[a-z0-9\-]+$/, message: "must be lowercase alphanumeric with hyphens")
-    |> validate_format(:namespace, ~r/^[a-z0-9\-]+$/, message: "must be lowercase alphanumeric with hyphens")
+    |> validate_format(:slug, ~r/^[a-z0-9\-]+$/,
+      message: "must be lowercase alphanumeric with hyphens"
+    )
+    |> validate_format(:namespace, ~r/^[a-z0-9\-]+$/,
+      message: "must be lowercase alphanumeric with hyphens"
+    )
     |> validate_length(:namespace, min: 1, max: 63)
     |> validate_length(:slug, min: 1, max: 63)
     |> validate_length(:title, max: 255)
