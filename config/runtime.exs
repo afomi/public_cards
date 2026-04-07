@@ -28,15 +28,24 @@ if config_env() == :prod do
       For example: ecto://USER:PASS@HOST/DATABASE
       """
 
-  maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
+  db_hostname =
+    database_url
+    |> URI.parse()
+    |> Map.get(:host)
+    |> to_charlist()
 
   config :public_cards, PublicCards.Repo,
-    # ssl: true,
     url: database_url,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-    # For machines with several cores, consider starting multiple pools of `pool_size`
-    # pool_count: 4,
-    socket_options: maybe_ipv6
+    ssl:
+      if(System.get_env("DATABASE_SSL", "true") != "false",
+        do: [
+          verify: :verify_peer,
+          cacertfile: Application.app_dir(:public_cards, "priv/ssl/aws-rds-ca.pem"),
+          server_name_indication: db_hostname
+        ],
+        else: false
+      )
 
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
