@@ -35,8 +35,14 @@ jobs:
         id: instances
         run: |
           INSTANCES=$(aws ec2 describe-instances \
-            --filters "Name=tag:Name,Values=public-cards-*" "Name=instance-state-name,Values=running" \
+            --filters "Name=tag:Name,Values=public-cards,public-cards-*" "Name=instance-state-name,Values=running" \
             --query 'Reservations[].Instances[].InstanceId' --output text)
+          # Match the Name tag with or without a suffix, and never "succeed" with nothing deployed
+          # (strikenight and public-cards silently deployed nothing for months, 2026).
+          if [ -z "$INSTANCES" ]; then
+            echo "ERROR: no running public-cards instance found; nothing would be deployed" >&2
+            exit 1
+          fi
           echo "ids=$INSTANCES" >> $GITHUB_OUTPUT
           echo "first=$(echo $INSTANCES | awk '{print $1}')" >> $GITHUB_OUTPUT
 
